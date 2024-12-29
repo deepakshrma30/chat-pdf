@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-import { Delete, MessageCircle, Plus, Settings, Trash } from "lucide-react";
+import { MessageCircle, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,22 +20,10 @@ type Props = {
   chats?: ChatSchema[];
   chatId?: number;
 };
-const queryClient = new QueryClient();
+
 const ChatSidebar = ({ chatId, chats }: Props) => {
   const router = useRouter();
   const [chats1, setChats1] = useState<ChatSchema[] | undefined>(chats);
-  const mutate = useMutation({
-    mutationFn: async (id: any) => {
-      const data = await axios.delete(`/api/get-chats/${id}`);
-      return data.data;
-    },
-    // onSuccess: () => {
-    //   setChats1((prev) => prev?.filter((chat) => chat.id !== id));
-    // },
-    onSuccess(data, variables, context) {
-      setChats1((prev) => prev?.filter((chat) => chat.id !== variables));
-    },
-  });
 
   return (
     // <SidebarProvider>

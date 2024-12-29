@@ -9,7 +9,7 @@ import {
 } from "@pinecone-database/doc-splitter";
 import md5 from "md5";
 import { getEmbeddings } from "./embeddings";
-import { Vector } from "@pinecone-database/pinecone/dist/pinecone-generated-ts-fetch/db_data";
+
 import { convertToAscii } from "./utils";
 console.log(process.env.PINCONE_APIKEY, "api-key");
 const pinecone = new Pinecone({
@@ -25,15 +25,14 @@ type PDF = {
 export async function loadIntoPineCone(file_Key: string) {
   console.log("Downloading");
   const fileName = await downloadFromS3(file_Key);
-  console.log(fileName,"fileName")
+  console.log(fileName, "fileName");
   if (!fileName) {
     throw new Error("Not able to download");
   }
-  const sanitizedPath = fileName.replace(/\\/g, '/');
+  const sanitizedPath = fileName.replace(/\\/g, "/");
   const loader = new PDFLoader(sanitizedPath);
-  console.log(loader.load(),"loaded")
+  console.log(loader.load(), "loaded");
   const pages = (await loader.load()) as PDF[];
-
 
   const documents = await Promise.all(
     pages.map((page) => prepareDocuments(page))

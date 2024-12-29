@@ -43,12 +43,10 @@ export async function DELETE(
       const deletedMessage = await db
         .delete(messages)
         .where(eq(messages.chatId, Number(id)));
-      await deleteFromS3(fileKey?.[0]?.fileKey);
+
       console.log(deletedMessage, "Deletee");
       console.log(deletedMessage, "Deletee");
-      const deletedChat = await db
-        .delete(chats)
-        .where(eq(chats.id, Number(id)));
+
       return NextResponse.json({
         message: "Messages deleted successfully",
         deletedMessage,

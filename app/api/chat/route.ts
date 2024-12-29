@@ -6,10 +6,6 @@ import { Message, streamText } from "ai";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-
-
-
-
 export const maxDuration = 30;
 export async function POST(req: Request) {
   try {
@@ -51,7 +47,7 @@ export async function POST(req: Request) {
         ...messages.filter((message: Message) => message.role === "user"),
       ],
 
-      onFinish: async ({ text, finishReason, usage }) => {
+      onFinish: async ({ text }) => {
         // your own logic, e.g. for saving the chat history or recording usage
         await db.insert(_messages).values({
           chatId,

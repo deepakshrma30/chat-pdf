@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ChatSidebar from "@/components/chatSidebar";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
@@ -11,10 +11,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import Message from "@/components/Message";
 import PDFViewer from "@/components/pdfViewer";
 type Props = {
@@ -35,9 +32,7 @@ const Page = async ({ params: { Id } }: Props) => {
     return redirect("/");
   }
 
-  const currentChat=_chats.find(chat=>chat.id===Number(Id))
-
-
+  const currentChat = _chats.find((chat) => chat.id === Number(Id));
 
   return (
     <SidebarProvider>
@@ -47,18 +42,20 @@ const Page = async ({ params: { Id } }: Props) => {
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
           <Separator orientation="vertical" className="mr-2 h-4" />
-          
         </header>
 
         <div className="flex h-[calc(100vh-4rem)]">
           <div className="flex flex-1   flex-col gap-4 p-4 ">
             <div className="flex flex-1 overflow-y-auto  p-2 ">
               <PDFViewer
-                pdf_url={currentChat?.pdfUrl || "https://icseindia.org/document/sample.pdf"}
+                pdf_url={
+                  currentChat?.pdfUrl ||
+                  "https://icseindia.org/document/sample.pdf"
+                }
               />
             </div>
           </div>
-          <Message chatId={Number(Id)}  />
+          <Message chatId={Number(Id)} />
         </div>
       </SidebarInset>
     </SidebarProvider>
